@@ -18,7 +18,12 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
-        return NeighbourFragment.newInstance();
+        if (position == 0) {
+            return NeighbourFragment.newInstance(false); // Affiche tous les voisins
+        } else if (position == 1) {
+            return NeighbourFragment.newInstance(true); // Affiche seulement les favoris
+        }
+        return null;
     }
 
     /**
@@ -27,6 +32,6 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return 1;
+        return 2;
     }
 }

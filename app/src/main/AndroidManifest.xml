@@ -25,6 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--NBA - Start-->
+        <activity
+            android:name=".ui.neighbour_details.NeighbourDetailsActivity"
+            android:label="@string/user_details_activity_title">
+        </activity>
+        <!--NBA - End-->
     </application>
 
 </manifest>
