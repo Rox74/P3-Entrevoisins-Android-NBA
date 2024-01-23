@@ -2,10 +2,13 @@ package com.openclassrooms.entrevoisins.model;
 
 import java.util.Objects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Model object representing a Neighbour
  */
-public class Neighbour {
+public class Neighbour implements Parcelable {
 
     /** Identifier */
     private long id;
@@ -25,6 +28,11 @@ public class Neighbour {
     /** About me */
     private String aboutMe;
 
+    // NBA - START
+    /** Is Favorite */
+    private boolean isFavorite;
+    // NBA - STOP
+
     /**
      * Constructor
      * @param id
@@ -32,13 +40,14 @@ public class Neighbour {
      * @param avatarUrl
      */
     public Neighbour(long id, String name, String avatarUrl, String address,
-                     String phoneNumber, String aboutMe) {
+                     String phoneNumber, String aboutMe, Boolean isFavorite) {
         this.id = id;
         this.name = name;
         this.avatarUrl = avatarUrl;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.aboutMe = aboutMe;
+        this.isFavorite = isFavorite;
     }
 
     public long getId() {
@@ -89,6 +98,16 @@ public class Neighbour {
         this.aboutMe = aboutMe;
     }
 
+    // NBA - START
+    public Boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(Boolean isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+    // NBA - STOP
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -101,4 +120,60 @@ public class Neighbour {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+
+    // NBA - START
+    // Builder and methods needed for Parcelable
+    protected Neighbour(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        avatarUrl = in.readString();
+        address = in.readString();
+        phoneNumber = in.readString();
+        aboutMe = in.readString();
+        isFavorite = in.readByte() != 0;
+    }
+
+    public static final Creator<Neighbour> CREATOR = new Creator<Neighbour>() {
+        @Override
+        public Neighbour createFromParcel(Parcel in) {
+            return new Neighbour(in);
+        }
+
+        @Override
+        public Neighbour[] newArray(int size) {
+            return new Neighbour[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(avatarUrl);
+        dest.writeString(address);
+        dest.writeString(phoneNumber);
+        dest.writeString(aboutMe);
+        dest.writeByte((byte) (isFavorite ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Neighbour{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", aboutMe='" + aboutMe + '\'' +
+                ", isFavorite=" + isFavorite +
+                '}';
+    }
+    // NBA - END
+
 }
